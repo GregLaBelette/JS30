@@ -16,6 +16,31 @@
   </form>
 <script>
 const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+let cities = null
+
+fetch(endpoint)
+  .then(res => res.json())
+  .then(result => {
+    cities = result
+    console.log(cities[0])
+  })
+
+function search (query) {
+  filteredCities = cities.filter((city) => city.city.toLowerCase().includes(query.toLowerCase().trim()) || city.state.toLowerCase().includes(query.toLowerCase().trim()))
+  console.log(filteredCities)
+  if (filteredCities.length == 0) {
+    document.querySelector('.suggestions').innerHTML = '<li>Filter for a city</li><li>or a state</li>'
+  } else {
+    document.querySelector('.suggestions').innerHTML = ''
+    filteredCities.forEach((city) => {
+      document.querySelector('.suggestions').insertAdjacentHTML('beforeend', `<li>${city.city}, ${city.state} <span class='population'>${new Intl.NumberFormat("en-US").format(city.population)}</span></li>`)
+    })
+  }
+}
+
+document.querySelector('input').addEventListener('input', (e) => {
+  search(e.currentTarget.value)
+})
 
 </script>
 </body>
