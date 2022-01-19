@@ -15,6 +15,26 @@
   </div>
 
 <script>
+
+let holding = false
+let percent = 16.3
+let speed = 1
+
+document.querySelector('.speed').addEventListener('mousedown', e => holding = true )
+document.querySelector('.speed').addEventListener('mouseup', e => holding = false )
+document.querySelector('.speed').addEventListener('mouseout', e => holding = false )
+
+document.querySelector('.speed').addEventListener('mousemove', function(e) {
+  percent = Math.round(((e.pageY - this.offsetTop) / this.offsetHeight) * 100)
+  speed = ((4 - 0.4) * percent / 100 + 0.4).toFixed(2)
+  console.log(speed)
+  // if (holding) {
+  // }
+  document.querySelector('.speed-bar').style.height=`${percent}%`
+  document.querySelector('.speed-bar').innerText=`${speed}x`
+  document.querySelector('video').playbackRate = speed
+})
+
 </script>
 </body>
 </html>
