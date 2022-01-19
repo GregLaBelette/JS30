@@ -96,6 +96,52 @@
   </div>
 
 <script>
+
+const boxes = Array.from (document.querySelectorAll('input'))
+let shift = false
+let last = []
+
+function getIndex(box) {
+  return boxes.indexOf(box)
+}
+
+function lookForClosest(num) {
+  const checked = boxes.filter(box => box.checked).map(box => getIndex(box))
+  if (checked.length > 0) {
+    return checked.sort((a,b) => Math.abs(a - num) > Math.abs(b - num) ? 1 : -1)[1]
+  } else {
+    return null
+  }
+}
+
+function selectBetween(closest, current) {
+  const bounds = [closest, current].sort()
+  for (let i = bounds[0]; i <= bounds[1]; i++) {
+    boxes[i].checked = true
+  }
+}
+
+function boxclick(e) {
+  const current = getIndex(this)
+  if(shift) {
+    const closest = lookForClosest(current)
+    if (closest == 0 || closest) {
+      selectBetween(closest, current)
+    }
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.keyCode == 16) { shift = true }
+})
+document.addEventListener('keyup', (e) => {
+  if (e.keyCode == 16) { shift = false }
+})
+
+boxes.forEach((box) => {
+  box.addEventListener('click', boxclick)
+})
+
 </script>
 </body>
 </html>
