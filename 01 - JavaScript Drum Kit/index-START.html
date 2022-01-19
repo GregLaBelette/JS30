@@ -73,8 +73,7 @@ document.querySelectorAll('.key').forEach(keyDiv => {
     }
   })
   document.addEventListener('keyup', (e) => {
-    if(e.key === `${keyDiv.querySelector('kbd').innerText.toLowerCase()}`) {k
-      eyDiv.classList.remove('playing') }
+    if(e.key === `${keyDiv.querySelector('kbd').innerText.toLowerCase()}`) { keyDiv.classList.remove('playing') }
   })
 })
 
