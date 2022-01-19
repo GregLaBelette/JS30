@@ -59,8 +59,24 @@
 
 <script>
 
-</script>
+function playsound(keyDiv) {
+  keyDiv.classList.add('playing')
+  const audioNumber = keyDiv.dataset.key
+  const sound = document.querySelector(`audio[data-key='${audioNumber}']`)
+  if (sound.paused) { sound.play() }
+  else { sound.currentTime = 0 }
+}
 
+document.querySelectorAll('.key').forEach(keyDiv => {
+  document.addEventListener('keydown', (e) => {
+    if(e.key === `${keyDiv.querySelector('kbd').innerText.toLowerCase()}`) { playsound(keyDiv) }
+  })
+  document.addEventListener('keyup', (e) => {
+    if(e.key === `${keyDiv.querySelector('kbd').innerText.toLowerCase()}`) { keyDiv.classList.remove('playing') }
+  })
+})
+
+</script>
 
 </body>
 </html>
